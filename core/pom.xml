@@ -20,7 +20,7 @@
     <dependencies>
         <dependency>
             <groupId>${pom.parent.groupId}</groupId>
-            <artifactId>foodi-model</artifactId>
+            <artifactId>realtor-model</artifactId>
             <version>1.0.0</version>
         </dependency>
 
