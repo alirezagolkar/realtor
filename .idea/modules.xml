@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/realtor.iml" filepath="$PROJECT_DIR$/realtor.iml" />
+      <module fileurl="file://$PROJECT_DIR$/core/realtor-core.iml" filepath="$PROJECT_DIR$/core/realtor-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/core-api/realtor-core-api.iml" filepath="$PROJECT_DIR$/core-api/realtor-core-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dao/realtor-dao.iml" filepath="$PROJECT_DIR$/dao/realtor-dao.iml" />
+      <module fileurl="file://$PROJECT_DIR$/message/realtor-message.iml" filepath="$PROJECT_DIR$/message/realtor-message.iml" />
+      <module fileurl="file://$PROJECT_DIR$/model/realtor-model.iml" filepath="$PROJECT_DIR$/model/realtor-model.iml" />
+      <module fileurl="file://$PROJECT_DIR$/web/realtor-web.iml" filepath="$PROJECT_DIR$/web/realtor-web.iml" />
+    </modules>
+  </component>
+</project>
