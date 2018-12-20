@@ -30,10 +30,6 @@ public class SystemCache {
 
     private synchronized void initializeCache()
     {
-        try {
-            userService.findAllUsers();
-        } catch (BusinessException e) {
-            e.printStackTrace();
-        }
+        userService.findAllUsers();
     }
 }

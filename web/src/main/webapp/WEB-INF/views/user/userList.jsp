@@ -9,11 +9,12 @@
 	<title>realtor</title>
 	<link href="<c:url value='/static/css/bootstrap.css' />" rel="stylesheet"/>
 	<link href="<c:url value='/static/css/app.css' />" rel="stylesheet"/>
+	<script src="<c:url value="/static/js/lib/jquery-3.2.1.min.js"/>"></script>
 </head>
 
 <body>
 	<div class="generic-container">
-		<%@include file="authheader.jsp" %>	
+		<%@include file="../authheader.jsp" %>
 		<div class="panel panel-default">
 			  <!-- Default panel contents -->
 		  	<div class="panel-heading"><span class="lead">List of Users </span></div>
@@ -59,3 +60,6 @@
    	</div>
 </body>
 </html>
+
+<script type="text/javascript">
+</script>

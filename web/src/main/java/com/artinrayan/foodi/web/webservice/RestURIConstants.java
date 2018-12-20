@@ -7,8 +7,8 @@ public class RestURIConstants {
 
     public static final String GET_HOST = "/getHost/{id}";
     public static final String GET_ALL_HOST = "/getHosts";
-    public static final String CREATE_HOST = "/save";
-    public static final String UPDATE_HOST = "/update/{id}";
-    public static final String DELETE_HOST = "/delete/{id}";
+    public static final String CREATE_HOST = "/createHost";
+    public static final String UPDATE_HOST = "/updateHost/{id}";
+    public static final String DELETE_HOST = "/deleteHost/{id}";
 
 }

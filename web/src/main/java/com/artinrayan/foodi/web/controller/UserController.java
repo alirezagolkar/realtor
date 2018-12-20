@@ -5,7 +5,6 @@ import com.artinrayan.foodi.core.UserService;
 import com.artinrayan.foodi.model.User;
 import com.artinrayan.foodi.model.UserProfile;
 import com.artinrayan.foodi.web.util.ViewUtil;
-import exception.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -15,13 +14,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 /**
- * Created by asus on 6/6/2017.
+ * Controller to handle requests to users
  */
 @Controller
 @RequestMapping("/user")
@@ -39,40 +38,33 @@ public class UserController {
 
 
     /**
-     *
      * @param model
      * @return
      */
-    @RequestMapping(value = { "/userList" }, method = RequestMethod.GET)
+    @RequestMapping(value = {"/userList"}, method = RequestMethod.GET)
     public String listUsers(ModelMap model) {
 
         List<User> users = null;
-        try {
-            users = userService.findAllUsers();
-        } catch (BusinessException e) {
-            e.printStackTrace();
-        }
+        users = userService.findAllUsers();
         model.addAttribute("users", users);
         return ViewUtil.Views.USERLIST.getViewName();
     }
 
     /**
-     *
      * @param model
      * @return
      */
-    @RequestMapping(value = { "/angularMap" }, method = RequestMethod.GET)
+    @RequestMapping(value = {"/angularMap"}, method = RequestMethod.GET)
     public String angularMap(ModelMap model) {
 
         return "angularMap";
     }
 
     /**
-     *
      * @param model
      * @return
      */
-    @RequestMapping(value = { "/newUser" }, method = RequestMethod.GET)
+    @RequestMapping(value = {"/newUser"}, method = RequestMethod.GET)
     public String newUser(ModelMap model) {
         User user = new User();
         model.addAttribute("user", user);
@@ -81,56 +73,43 @@ public class UserController {
     }
 
     /**
-     *
      * @param user
      * @param result
      * @param model
      * @return
-     * @throws BusinessException
      */
-    @RequestMapping(value = { "/newUser" }, method = RequestMethod.POST)
+    @RequestMapping(value = {"/newUser"}, method = RequestMethod.POST)
     public String saveUser(@Valid User user, BindingResult result,
-                           ModelMap model) throws BusinessException {
+                           ModelMap model) {
 
         if (result.hasErrors()) {
             return "userRegistration";
         }
 
-		/*
-		 * Preferred way to achieve uniqueness of field [sso] should be implementing custom @Unique annotation
-		 * and applying it on field [sso] of Model class [User].
-		 *
-		 * Below mentioned peace of code [if block] is to demonstrate that you can fill custom errors outside the validation
-		 * framework as well while still using internationalized messages.
-		 *
-		 */
-        if(!userService.isUserUnique(user.getId(), user.getUsername())){
+        if (!userService.isUserUnique(user.getId(), user.getUsername())) {
             ResourceBundle rb = ResourceBundle.
                     getBundle("message.user.Messages", LocaleContextHolder.getLocale());
 
-            FieldError ssoError =new FieldError("user","username", messageSource.
+            FieldError ssoError = new FieldError("user", "username", messageSource.
                     getMessage(rb.getString("non.unique.username"),
-                    new String[]{user.getUsername()}, LocaleContextHolder.getLocale()));
+                            new String[]{user.getUsername()}, LocaleContextHolder.getLocale()));
             result.addError(ssoError);
             return "userRegistration";
         }
 
         userService.saveUser(user);
 
-        model.addAttribute("success", "User " + user.getFirstName() + " "+ user.getLastName() + " registered successfully");
+        model.addAttribute("success", "User " + user.getFirstName() + " " + user.getLastName() + " registered successfully");
         return "userRegistrationSuccess";
     }
 
     /**
-     *
      * @param username
      * @param model
-     * @param request
      * @return
-     * @throws BusinessException
      */
-    @RequestMapping(value = { "/edit-user-{username}" }, method = RequestMethod.GET)
-    public String editUser(@PathVariable String username, ModelMap model, HttpServletRequest request) throws BusinessException {
+    @RequestMapping(value = {"/edit-user-{username}"}, method = RequestMethod.GET)
+    public String editUser(@PathVariable String username, ModelMap model) {
         User user = userService.findUserAuthenticateInfoByUsername(username);
         model.addAttribute("user", user);
         model.addAttribute("edit", true);
@@ -138,55 +117,49 @@ public class UserController {
     }
 
     /**
-     *
      * @param user
      * @param result
      * @param model
-     * @param username
-     * @param request
-     * @param userId
      * @return
-     * @throws BusinessException
      */
-    @RequestMapping(value = { "/edit-user-{username}" }, method = RequestMethod.POST)
+    @RequestMapping(value = {"/edit-user-{username}"}, method = RequestMethod.POST)
     public String updateUser(@Valid User user, BindingResult result,
-                             ModelMap model, @PathVariable String username, HttpServletRequest request,
-                             @RequestParam(value="id", required=false) String userId) throws BusinessException {
+                             ModelMap model, Locale locale) {
 
         if (result.hasErrors()) {
             return ViewUtil.Views.USERREGISTRATION.getViewName();
         }
 
-		/*//Uncomment below 'if block' if you WANT TO ALLOW UPDATING SSO_ID in UI which is a unique key to a User.
-		if(!userService.isUserSSOUnique(user.getId(), user.getSsoId())){
-			FieldError ssoError =new FieldError("user","ssoId",messageSource.getMessage("non.unique.ssoId", new String[]{user.getSsoId()}, Locale.getDefault()));
-		    result.addError(ssoError);
-			return "registration";
-		}*/
-
+        if (userService.isUserUnique(user.getId(), user.getUsername())) {
+            FieldError ssoError = new FieldError("user", "ssoId",
+                messageSource.getMessage("non.unique.username", null, locale));
+            result.addError(ssoError);
+            return ViewUtil.Views.USERREGISTRATION.getViewName();
+        }
 
         userService.updateUser(user);
 
-        model.addAttribute("success", "User " + user.getFirstName() + " "+ user.getLastName() + " updated successfully");
+        model.addAttribute("success", "User " + user.getFirstName() + " " + user.getLastName() + " updated successfully");
         return ViewUtil.Views.USEREGISTRATIONSUCCESS.getViewName();
     }
 
-
     /**
-     *
      * @param username
      * @return
-     * @throws BusinessException
      */
-    @RequestMapping(value = { "/delete-user-{username}" }, method = RequestMethod.GET)
-    public String deleteUser(@PathVariable String username) throws BusinessException {
-        userService.deleteUserBySSO(username);
+    @RequestMapping(value = {"/delete-user-{username}"}, method = RequestMethod.GET)
+    public String deleteUser(@PathVariable String username) {
+        userService.deleteUserByUsername(username);
         return "redirect:/user/userList";
     }
 
+    @RequestMapping(value = {"/redirect-user"}, method = RequestMethod.POST)
+    @ResponseBody
+    public String redirect() {
+        return "/host/newHost";
+    }
 
     /**
-     *
      * @return
      */
     @ModelAttribute("roles")

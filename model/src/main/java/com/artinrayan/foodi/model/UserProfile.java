@@ -3,6 +3,9 @@ package com.artinrayan.foodi.model;
 import javax.persistence.*;
 import java.io.Serializable;
 
+/**
+ * Entity to host a user profile information
+ */
 @Entity
 @Table(name="USER_PROFILE")
 public class UserProfile implements Serializable{

@@ -7,21 +7,19 @@ public class ViewUtil {
 
     public enum Views
     {
-        HOSTSUCCESS("hostRegistrationSuccess"),
-        HOSTLIST("hostList"),
-        HOSTACCESSLIST("hostAccessList"),
-        MANAGEHOSTATTACHMENT("manageHostAttachment"),
-        MANAGEHOSTCATEGORY("manageHostCategory"),
-        HOSTREGISTRATION("hostRegistration"),
-        ACCESSDENIED("accessDenied"),
+        HOSTSUCCESS("host/hostRegistrationSuccess"),
+        HOSTLIST("host/hostList"),
+        ALLHOSTLIST("host/"),
+        MANAGEHOSTATTACHMENT("attachment/manageHostAttachment"),
+        HOSTREGISTRATION("host/hostRegistration"),
+        ACCESSDENIED("error/accessDenied"),
         HOME("home"),
-        LOGIN("login"),
-        LOGOUT("logout"),
-        USERLIST("userList"),
-        USEREGISTRATIONSUCCESS("userRegistrationSuccess"),
-        USERREGISTRATION("userRegistration"),
-        HOST("host"),
-        ERRORPAGE("error");
+        LOGIN("auth/login"),
+        USERLIST("user/userList"),
+        USEREGISTRATIONSUCCESS("user/userRegistrationSuccess"),
+        USERREGISTRATION("user/userRegistration"),
+        HOST("host/host"),
+        ERRORPAGE("error/error");
 
 
 

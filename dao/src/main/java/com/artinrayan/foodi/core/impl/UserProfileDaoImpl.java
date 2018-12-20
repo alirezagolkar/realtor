@@ -10,25 +10,44 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-
+/**
+ * Implementation for userProfileDao to handle operation for user profiles
+ */
 @Repository("userProfileDao")
 public class UserProfileDaoImpl extends AbstractDao<Integer, UserProfile> implements UserProfileDao {
 
-	public UserProfile findById(int id) {
-		return getByKey(id);
-	}
+    /**
+     * Loads user profile by a given Id
+     *
+     * @param id
+     * @return UserProfile object
+     */
+    public UserProfile findById(int id) {
+        return getByKey(id);
+    }
 
-	public UserProfile findByType(String type) {
-		Criteria crit = createEntityCriteria();
-		crit.add(Restrictions.eq("type", type));
-		return (UserProfile) crit.uniqueResult();
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<UserProfile> findAll(){
-		Criteria crit = createEntityCriteria();
-		crit.addOrder(Order.asc("type"));
-		return (List<UserProfile>)crit.list();
-	}
-	
+    /**
+     * Loads user profile by a type
+     *
+     * @param type
+     * @return UserProfile object
+     */
+    public UserProfile findByType(String type) {
+        Criteria crit = createEntityCriteria();
+        crit.add(Restrictions.eq("type", type));
+        return (UserProfile) crit.uniqueResult();
+    }
+
+    /**
+     * Loads all user profiles
+     *
+     * @return list of user profiles
+     */
+    @SuppressWarnings("unchecked")
+    public List<UserProfile> findAll() {
+        Criteria crit = createEntityCriteria();
+        crit.addOrder(Order.asc("type"));
+        return (List<UserProfile>) crit.list();
+    }
+
 }

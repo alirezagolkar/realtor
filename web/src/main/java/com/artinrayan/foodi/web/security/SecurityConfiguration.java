@@ -1,8 +1,8 @@
 package com.artinrayan.foodi.web.security;
 
 import com.artinrayan.foodi.web.configuration.CsrfHeaderFilter;
-import com.artinrayan.foodi.web.security.handler.FoodiAuthenticationSuccessHandler;
-import com.artinrayan.foodi.web.security.handler.FoodiLogoutSuccessHandler;
+import com.artinrayan.foodi.web.security.handler.AuthenticationSuccessHandler;
+import com.artinrayan.foodi.web.security.handler.LogoutSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -37,10 +37,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	PersistentTokenRepository tokenRepository;
 
 	@Autowired
-	FoodiAuthenticationSuccessHandler foodiAuthenticationSuccessHandler;
+	AuthenticationSuccessHandler foodiAuthenticationSuccessHandler;
 
 	@Autowired
-	FoodiLogoutSuccessHandler foodiLogoutSuccessHandler;
+	LogoutSuccessHandler foodiLogoutSuccessHandler;
 
 	@Autowired
 	public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
@@ -70,7 +70,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class)
 				.formLogin().successHandler(foodiAuthenticationSuccessHandler)
 				.and().logout().logoutSuccessHandler(foodiLogoutSuccessHandler)
-				.and().exceptionHandling().accessDeniedPage("/Access_Denied").and()
+				.and().exceptionHandling().accessDeniedPage("/access-denied").and()
 				.csrf().csrfTokenRepository(csrfTokenRepository());
 
 		http.authorizeRequests().antMatchers(HttpMethod.GET, "/**").permitAll();

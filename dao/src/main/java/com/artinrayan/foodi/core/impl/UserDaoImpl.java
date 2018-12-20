@@ -16,13 +16,21 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-
+/**
+ * Implements user dao interface and handle database operations for users
+ */
 @Repository("userDao")
 @Transactional(propagation = Propagation.MANDATORY)
 public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
 
 	static final Logger logger = LoggerFactory.getLogger(UserDaoImpl.class);
-	
+
+	/**
+	 * Loads a user with a given user Id
+	 *
+	 * @param id
+	 * @return user object
+     */
 	public User findById(int id) {
 		User user = getByKey(id);
 		if(user!=null){
@@ -31,6 +39,13 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
 		return user;
 	}
 
+	/**
+	 * Loads a user authentication info with a given username
+	 *
+	 * @param username
+	 * @return user object
+	 * @throws UserDaoException
+     */
 	public User findUserAuthenticateInfoByUsername(String username) throws UserDaoException {
 		logger.info("username : {}", username);
 		Criteria crit = createEntityCriteria();
@@ -42,24 +57,43 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
 		return user;
 	}
 
+	/**
+	 * Loads a user based on natural Id
+	 *
+	 * @param username
+	 * @return user object
+	 * @throws UserDaoException
+     */
 	public User loadUserByUsername (String username) throws UserDaoException
 	{
 		return (User) getSession().bySimpleNaturalId(User.class).load(username);
 	}
 
+	/**
+	 * Loads a user with a given username
+	 *
+	 * @param username
+	 * @return user object
+	 * @throws UserDaoException
+     */
 	public User findUserByUsername(String username) throws UserDaoException {
 		logger.info("username : {}", username);
 		Criteria crit = createEntityCriteria();
 		crit.add(Restrictions.eq("username", username));
 		User user = (User)crit.uniqueResult();
 		if(user!=null){
-//			Hibernate.initialize(user.getUserProfiles());
-//			Hibernate.initialize(user.getUserHosts());
+			Hibernate.initialize(user.getUserProfiles());
+			Hibernate.initialize(user.getUserHosts());
 		}
 		return user;
 	}
 
-	@SuppressWarnings("unchecked")
+	/**
+	 * Loads all users
+	 *
+	 * @return list of users
+	 * @throws UserDaoException
+     */
 	public List<User> findAllUsers() throws UserDaoException {
 		Criteria criteria = createEntityCriteria().addOrder(Order.asc("firstName"));
 		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//To avoid duplicates.
@@ -74,13 +108,24 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
 		return users;
 	}
 
+	/**
+	 * Stores a user
+	 *
+	 * @param user
+	 * @throws UserDaoException
+     */
 	public void save(User user)throws UserDaoException {
 		persist(user);
 	}
 
-	public void deleteBySSO(String sso) {
+	/**
+	 * Deletes a user with given username
+	 *
+	 * @param username
+     */
+	public void deleteByUsername(String username) {
 		Criteria crit = createEntityCriteria();
-		crit.add(Restrictions.eq("username", sso));
+		crit.add(Restrictions.eq("username", username));
 		User user = (User)crit.uniqueResult();
 		delete(user);
 	}
