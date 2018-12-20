@@ -4,6 +4,9 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * Entity to host persistent logins
+ */
 @Entity
 @Table(name="PERSISTENT_LOGINS")
 public class PersistentLogin implements Serializable{
