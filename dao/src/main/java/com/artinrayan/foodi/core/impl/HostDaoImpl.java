@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
- * Created by asus on 5/26/2017.
+ * Implements host dao interface and handle database operations for hosts
  */
 @Repository("hostDao")
 @Transactional(propagation = Propagation.MANDATORY)
@@ -28,47 +28,30 @@ public class HostDaoImpl extends AbstractDao<Integer, Host> implements HostDao {
 
     static final Logger logger = LoggerFactory.getLogger(UserDaoImpl.class);
 
+    /**
+     * Loads a host by a given user Id
+     *
+     * @param userID
+     * @return list of hosts
+     * @throws HostDaoException
+     */
     @Override
     public List<Host> findByUserId(int userID) throws HostDaoException {
-        try {
-//            getSession().createCriteria(Host.class).list();
-//            Query query = createQuery("from Host host join host.user user WHERE user.id = :userId ");
-//            query.setParameter("userId", userID);
-//            List<Host> hostList =query.list();
-
-            Query query =  getSession().getNamedQuery(Host.GET_HOST_BY_USER_ID);
-            query.setInteger("userId", userID);
-
-//            List<Host> hostList = (List<Host>) query.list();
-//
-//            if (hostList != null && hostList.size() > 0) {
-//                for (Host host : hostList)
-//                    Hibernate.initialize(host.getHostFiles());
-//            }
-            return query.list();
-
-//            Criteria criteria = createEntityCriteria().addOrder(Order.asc("hostName"));
-//            criteria.add( Restrictions.eq("user", user));
-//            List<Host> hostLists = (List<Host>) criteria.list();
-
-//            criteria.add(Restrictions.eq("user", userID));
-//            criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//To avoid dupl
-
-//            if (hostList != null && hostList.size() > 0) {
-//                for (Host host : hostList)
-//                    Hibernate.initialize(host.getHostAccesses());
-//            }
-//            return hostList;
-        }
-        catch (QueryException e)
-        {
-            throw new HostDaoException(e.getMessage(), e.getCause());
-        }
+        Query query = getSession().getNamedQuery(Host.GET_HOST_BY_USER_ID);
+        query.setInteger("userId", userID);
+        return query.list();
     }
 
+    /**
+     * Loads a host by a given host Id
+     *
+     * @param hostId
+     * @return host object
+     * @throws HostDaoException
+     */
     @Override
     public Host findByHostId(int hostId) throws HostDaoException {
-        Query query =  getSession().getNamedQuery(Host.GET_HOST_BY_HOST_ID);
+        Query query = getSession().getNamedQuery(Host.GET_HOST_BY_HOST_ID);
         query.setInteger("hostId", hostId);
         Host host = (Host) query.uniqueResult();
 
@@ -79,7 +62,11 @@ public class HostDaoImpl extends AbstractDao<Integer, Host> implements HostDao {
         return host;
     }
 
-
+    /**
+     * Loads all hosts
+     *
+     * @return list of hosts
+     */
     @Override
     public List<Host> findAllHosts() {
         Criteria criteria = createEntityCriteria().addOrder(Order.asc("hostName"));
@@ -90,37 +77,48 @@ public class HostDaoImpl extends AbstractDao<Integer, Host> implements HostDao {
         return hostList;
     }
 
+    /**
+     * Loads a host by given host and user Ids
+     *
+     * @param hostId
+     * @param user
+     * @return host object
+     */
     @Override
     public Host findHostByHostIdAndUserId(int hostId, User user) {
         logger.info("hostId : {}", hostId);
         Criteria crit = createEntityCriteria();
         crit.add(Restrictions.eq("hostId", hostId));
         crit.add(Restrictions.eq("user", user));
-        Host Host = (Host)crit.uniqueResult();
+        Host Host = (Host) crit.uniqueResult();
         return Host;
     }
 
-//    @Override
-//    public Host findHostByHostIdWithHostAccesses(int hostId) {
-//        Query query = getSession().getNamedQuery(Host.GET_HOST_BY_ID).setInteger("id", hostId);
-//        query.setInteger("id", hostId);
-//        Host host = (Host) query.list().get(0);
-//        if (host != null) {
-//            Hibernate.initialize(host.getHostAccesses());
-//        }
-//        return host;
-//    }
-
+    /**
+     * Saves a host
+     *
+     * @param host
+     */
     @Override
     public void save(Host host) {
         persist(host);
     }
 
+    /**
+     * Updates a host
+     *
+     * @param host
+     */
     @Override
     public void update(Host host) {
         persist(host);
     }
 
+    /**
+     * Deletes a host by a given host Id
+     *
+     * @param hostId
+     */
     @Override
     public void delete(int hostId) {
         Criteria criteria = createEntityCriteria();

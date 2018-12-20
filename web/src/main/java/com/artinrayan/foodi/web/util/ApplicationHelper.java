@@ -5,7 +5,7 @@ import javax.servlet.ServletContext;
 /**
  * Created by asus on 8/2/2017.
  */
-public class FoodiApplicationHelper {
+public class ApplicationHelper {
 
     private static ServletContext servletContext;
 
@@ -14,6 +14,6 @@ public class FoodiApplicationHelper {
     }
 
     public static void setServletContext(ServletContext servletContext) {
-        FoodiApplicationHelper.servletContext = servletContext;
+        ApplicationHelper.servletContext = servletContext;
     }
 }

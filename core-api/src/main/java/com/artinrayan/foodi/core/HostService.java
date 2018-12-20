@@ -7,21 +7,60 @@ import exception.BusinessException;
 import java.util.List;
 
 /**
- * Created by asus on 5/25/2017.
+ * Host Service
  */
 public interface HostService {
 
-    List<Host> findHostByUserId(int userId) throws BusinessException;
+    /**
+     * Loads a host by a given user Id
+     *
+     * @param userId
+     * @return list of hosts
+     */
+    List<Host> findHostByUserId(int userId);
 
-    Host findHostByHostId(int hostId) throws BusinessException;
+    /**
+     * Loads a host by a given host Id
+     *
+     * @param hostId
+     * @return host object
+     */
+    Host findHostByHostId(int hostId);
 
-    List<Host> findAllHosts() throws BusinessException;
+    /**
+     * Loads all hosts
+     *
+     * @return list of hosts
+     */
+    List<Host> findAllHosts();
 
-    Host findHostByHostIdAndUserId(int hostId, User user) throws BusinessException;
+    /**
+     * Loads a host by given host and user Ids
+     *
+     * @param hostId
+     * @param user
+     * @return host object
+     */
+    Host findHostByHostIdAndUserId(int hostId, User user);
 
-    void saveHost(Host host) throws BusinessException;
+    /**
+     * Saves a host
+     *
+     * @param host
+     */
+    void saveHost(Host host);
 
-    void updateHost(Host host) throws BusinessException;
+    /**
+     * Updates host
+     *
+     * @param host
+     */
+    void updateHost(Host host);
 
-    void deleteHost(int hostId) throws BusinessException;
+    /**
+     * Deletes a host by a given host Id
+     *
+     * @param hostId
+     */
+    void deleteHost(int hostId);
 }

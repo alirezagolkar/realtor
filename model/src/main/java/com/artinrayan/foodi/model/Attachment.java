@@ -8,19 +8,19 @@ import java.util.Arrays;
 import java.util.Date;
 
 /**
- * Created by asus on 7/18/2017.
+ * Entity hosts attachments information
  */
 @Entity
 @Table(name = "Attachment")
 @NamedQueries
-        (
-                {
-                        @NamedQuery(name=Attachment.GET_ATTACHMENTS_BY_HOST_ID, query=Attachment.GET_ATTACHMENTS_BY_HOST_ID_QUERY),
-                }
-        )
-public class Attachment implements Serializable{
+    (
+        {
+            @NamedQuery(name = Attachment.GET_ATTACHMENTS_BY_HOST_ID, query = Attachment.GET_ATTACHMENTS_BY_HOST_ID_QUERY),
+        }
+    )
+public class Attachment implements Serializable {
 
-    static final String GET_ATTACHMENTS_BY_HOST_ID_QUERY = "select a from Attachment a left join fetch a.host host WHERE host.id = :hostId ";
+    public static final String GET_ATTACHMENTS_BY_HOST_ID_QUERY = "select a from Attachment a left join fetch a.host host WHERE host.id = :hostId ";
     public static final String GET_ATTACHMENTS_BY_HOST_ID = "GET_ATTACHMENTS_BY_HOST_ID";
 
     @Id

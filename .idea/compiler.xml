@@ -59,6 +59,48 @@
         <processorPath useClasspath="true" />
         <module name="foodi-web" />
       </profile>
+      <profile default="false" name="Annotation profile for realtor-message" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="realtor-message" />
+      </profile>
+      <profile default="false" name="Annotation profile for realtor-core-api" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="realtor-core-api" />
+      </profile>
+      <profile default="false" name="Annotation profile for realtor-dao" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="realtor-dao" />
+      </profile>
+      <profile default="false" name="Annotation profile for realtor-core" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="realtor-core" />
+      </profile>
+      <profile default="false" name="Annotation profile for realtor-model" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="realtor-model" />
+      </profile>
+      <profile default="false" name="Annotation profile for realtor-web" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="realtor-web" />
+      </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="foodi" target="1.5" />
@@ -69,6 +111,12 @@
       <module name="foodi-model" target="1.7" />
       <module name="foodi-web" target="1.7" />
       <module name="realtor" target="1.5" />
+      <module name="realtor-core" target="1.7" />
+      <module name="realtor-core-api" target="1.7" />
+      <module name="realtor-dao" target="1.7" />
+      <module name="realtor-message" target="1.7" />
+      <module name="realtor-model" target="1.7" />
+      <module name="realtor-web" target="1.7" />
     </bytecodeTargetLevel>
   </component>
 </project>

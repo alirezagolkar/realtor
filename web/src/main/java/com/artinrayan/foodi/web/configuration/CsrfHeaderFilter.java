@@ -13,7 +13,6 @@ import java.io.IOException;
 
 /**
  * Created by asus on 7/15/2017.
- * https://spring.io/blog/2015/01/12/the-login-page-angular-js-and-spring-security-part-ii
  */
 public class CsrfHeaderFilter extends OncePerRequestFilter {
     @Override

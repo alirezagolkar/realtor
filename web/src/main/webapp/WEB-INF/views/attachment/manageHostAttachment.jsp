@@ -21,13 +21,13 @@
 
 <body>
 <div class="generic-container">
-    <%@include file="authheader.jsp" %>
+    <%@include file="../authheader.jsp" %>
     ${success}
 
     <form:form method="POST" enctype="multipart/form-data" modelAttribute="attachment" class="form-horizontal">
         <div class="row">
             <div class="form-group col-md-12">
-                <label class="col-md-3 control-lable" for="fileContent">File to upload</label>
+                <label class="col-md-3 control-lable" for="fileContent">Choose a file</label>
                 <div class="col-md-7">
                     <form:input type="file" path="fileContent" id="fileContent" class="form-control input-sm"/>
                     <div class="has-error">
@@ -40,10 +40,10 @@
             <div class="form-actions floatRight">
                 <c:choose>
                     <c:when test="${edit}">
-                        <input type="submit" value="Update" class="btn btn-primary btn-sm"/> or <a href="<c:url value='/host/unitList' />">Cancel</a>
+                        <input type="submit" value="Update" class="btn btn-primary btn-sm"/> or <a href="<c:url value='/host/hostList' />">Cancel</a>
                     </c:when>
                     <c:otherwise>
-                        <input type="submit" value="Register" class="btn btn-primary btn-sm"/> or <a href="<c:url value='/host/unitList' />">Cancel</a>
+                        <input type="submit" value="Submit" class="btn btn-primary btn-sm"/> or <a href="<c:url value='/host/hostList' />">Cancel</a>
                     </c:otherwise>
                 </c:choose>
             </div>
@@ -52,14 +52,14 @@
 
     <div class="panel panel-default">
         <!-- Default panel contents -->
-        <div class="panel-heading"><span class="lead">List of Hosts </span></div>
+        <div class="panel-heading"><span class="lead">Your rentals</span></div>
         <form:form method="POST" modelAttribute="attachment" class="form-horizontal">
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th>Host Name</th>
+                        <th>Rental Title</th>
                         <th>Creation date</th>
-                        <th>Attachment</th>
+                        <th>Rental files (Images, PDF, TEXT File, etc</th>
                         <sec:authorize access="hasRole('ADMIN') or hasRole('DBA')">
                             <th width="100"></th>
                         </sec:authorize>
@@ -74,12 +74,12 @@
                     <tr>
                         <td>${attachment.host.hostName}</td>
                         <td>${attachment.creationDate}</td>
-                        <td><img width="150px" height="100px" src="/displayAttachmentById?id=${attachment.id}"/></td>
+                        <td><img width="150px" height="100px" src="/attachment/getAttachmentById?id=${attachment.id}"/></td>
                         <sec:authorize access="hasRole('ADMIN') or hasRole('DBA')">
                             <td><a href="<c:url value='/host/edit-host-file-${attachment.id}' />" class="btn btn-success custom-width">edit</a></td>
                         </sec:authorize>
                         <sec:authorize access="hasRole('ADMIN')">
-                            <td><a href="<c:url value='/host/delete-host-file-${attachment.id}' />" class="btn btn-danger custom-width">delete</a></td>
+                            <td><a href="<c:url value='/attachment/delete-attachment-${attachment.id}' />" class="btn btn-danger custom-width">delete</a></td>
                         </sec:authorize>
                     </tr>
                 </c:forEach>

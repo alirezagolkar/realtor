@@ -6,16 +6,38 @@ import exception.BusinessException;
 import java.util.List;
 
 /**
- * Created by asus on 7/18/2017.
+ * Attachment Service
  */
 public interface AttachmentService {
 
-    void saveAttachment(Attachment attachmentId) throws BusinessException;
+    /**
+     * Saves an attachment
+     *
+     * @param attachment
+     */
+    void saveAttachment(Attachment attachment);
 
-    public List<Attachment> findAttachmentsByHostId(int attachmentId) throws BusinessException;
+    /**
+     * Loads attachments by a given host Id
+     *
+     * @param hostId
+     * @return
+     */
+    List<Attachment> findAttachmentsByHostId(int hostId);
 
-    public Attachment findAttachmentById(int attachmentId) throws BusinessException;
+    /**
+     * Loads attachments by a given attachment Id
+     *
+     * @param attachmentId
+     * @return
+     */
+    Attachment findAttachmentById(int attachmentId);
 
-    void deleteAttachmentById(int attachmentId) throws BusinessException;
+    /**
+     * Deletes an attachment
+     *
+     * @param attachmentId
+     */
+    void deleteAttachmentById(int attachmentId);
 
 }

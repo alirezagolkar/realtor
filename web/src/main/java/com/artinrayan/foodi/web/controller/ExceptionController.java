@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Created by asus on 5/26/2017.
+ * Controller to handle exceptions globally
  */
 @Controller
 public class ExceptionController {

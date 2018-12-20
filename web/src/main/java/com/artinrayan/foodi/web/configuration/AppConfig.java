@@ -69,11 +69,15 @@ public class AppConfig extends WebMvcConfigurerAdapter{
     @Bean
 	public MessageSource messageSource() {
 	    ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-	    messageSource.setBasename("messages");
+		messageSource.setBasename("classpath:localization");
 	    messageSource.setDefaultEncoding("UTF-8");
 	    return messageSource;
 	}
 
+	/**
+	 *
+	 * @return
+     */
 	@Bean
 	public LocaleResolver localeResolver(){
 		SessionLocaleResolver localeResolver = new SessionLocaleResolver();
@@ -81,6 +85,10 @@ public class AppConfig extends WebMvcConfigurerAdapter{
 		return localeResolver;
 	}
 
+	/**
+	 *
+	 * @return
+     */
 	@Bean
 	public LocaleChangeInterceptor localeInterceptor(){
 		LocaleChangeInterceptor interceptor = new LocaleChangeInterceptor();
@@ -88,12 +96,17 @@ public class AppConfig extends WebMvcConfigurerAdapter{
 		return interceptor;
 	}
 
+	/**
+	 *
+	 * @param registry
+     */
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(localeInterceptor());
 	}
     
-    /**Optional. It's only required when handling '.' in @PathVariables which otherwise ignore everything after last '.' in @PathVaidables argument.
+    /**
+	 * Optional. It's only required when handling '.' in @PathVariables which otherwise ignore everything after last '.' in @PathVaidables argument.
      * It's a known bug in Spring [https://jira.spring.io/browse/SPR-6164], still present in Spring 4.1.7.
      * This is a workaround for this issue.
      */
@@ -102,17 +115,15 @@ public class AppConfig extends WebMvcConfigurerAdapter{
         matcher.setUseRegisteredSuffixPatternMatch(true);
     }
 
-	// Bean name must be "multipartResolver", by default Spring uses method name as bean name.
+	/**
+	 * Bean name must be "multipartResolver", by default Spring uses method name as bean name.
+	 *
+	 * @return
+     */
 	@Bean
 	public MultipartResolver multipartResolver() {
 		return new StandardServletMultipartResolver();
 	}
 
-	/*
-	// if the method name is different, you must define the bean name manually like this :
-	@Bean(name = "multipartResolver")
-    public MultipartResolver createMultipartResolver() {
-        return new StandardServletMultipartResolver();
-    }*/
 }
 

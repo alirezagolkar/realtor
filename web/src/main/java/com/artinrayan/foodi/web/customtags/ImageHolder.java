@@ -31,6 +31,11 @@ public class ImageHolder extends SimpleTagSupport {
     @Inject
     HostService hostService;
 
+    /**
+     *
+     * @throws JspException
+     * @throws IOException
+     */
     @Override
     public void doTag() throws JspException, IOException {
         System.out.println("tag lib");
@@ -49,11 +54,7 @@ public class ImageHolder extends SimpleTagSupport {
                         : "jpg") + ";base64," + base64Encoded;
                 out.print(outputStr);
             }
-        }
-        catch (BusinessException e) {
-            e.printStackTrace();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             throw new JspException("Error: " + e.getMessage());
         }
     }

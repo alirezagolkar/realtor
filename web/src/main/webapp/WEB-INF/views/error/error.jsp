@@ -13,7 +13,7 @@
 
 <body>
     <div class="generic-container">
-        <%@include file="authheader.jsp" %>
+        <%@include file="../authheader.jsp" %>
 
         <div class="well lead">An error accured</div>
 

@@ -17,35 +17,46 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * Created by asus on 7/18/2017.
+ * Implements attachment dao interface and handle database operations for attachments
  */
 @Repository("attachmentDao")
 public class AttachmentDaoImpl extends AbstractDao<Integer, Attachment> implements AttachmentDao {
 
     static final Logger logger = LoggerFactory.getLogger(UserDaoImpl.class);
 
+    /**
+     * Saves an attachment
+     *
+     * @param attachment
+     * @throws AttachmentDaoException
+     */
     @Override
     public void save(Attachment attachment) throws AttachmentDaoException {
         persist(attachment);
     }
 
+    /**
+     * Loads attachments by a given host Id
+     *
+     * @param hostId
+     * @return
+     * @throws AttachmentDaoException
+     */
     @Override
     public List<Attachment> findAttachmentsByHostId(int hostId) throws AttachmentDaoException {
-        try {
-//            Criteria criteria = createEntityCriteria().addOrder(Order.asc("creationDate"));
-//            criteria.add(Restrictions.eq("HostId", hostId));
-//            criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 
             Query query =  getSession().getNamedQuery(Attachment.GET_ATTACHMENTS_BY_HOST_ID);
             query.setInteger("hostId", hostId);
             return query.list();
-        }
-        catch (QueryException e)
-        {
-            throw new HostDaoException(e.getMessage(), e.getCause());
-        }
     }
 
+    /**
+     * Loads attachments by a given attachment Id
+     *
+     * @param attachmentId
+     * @return
+     * @throws AttachmentDaoException
+     */
     @Override
     public Attachment findAttachmentById(int attachmentId) throws AttachmentDaoException {
         logger.info("accessFileId : {}", attachmentId);
@@ -54,20 +65,18 @@ public class AttachmentDaoImpl extends AbstractDao<Integer, Attachment> implemen
         return  (Attachment)crit.uniqueResult();
     }
 
+    /**
+     * Deletes an attachment
+     *
+     * @param attachmentId
+     * @throws AttachmentDaoException
+     */
     @Override
     public void delete(int attachmentId) throws AttachmentDaoException {
-        try {
             Criteria criteria = createEntityCriteria();
             criteria.add(Restrictions.eq("id", attachmentId));
             Attachment attachment = (Attachment) criteria.uniqueResult();
             if (attachment != null)
                 delete(attachment);
-        }
-        catch (QueryException e)
-        {
-            throw new AttachmentDaoException(e.getMessage(), e.getCause());
-        }
     }
-
-
 }

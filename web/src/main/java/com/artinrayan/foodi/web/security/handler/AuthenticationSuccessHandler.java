@@ -19,14 +19,10 @@ import java.io.IOException;
 import java.util.Locale;
 
 /**
- * Created by asus on 7/22/2017.
- * how to get redirected to a method at login/logout before target-url called in spring-security, spring mvc
+ * Authentication Success Handler
  */
 @Component
-public class FoodiAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
-
-    @Autowired
-    private UserService userService;
+public class AuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
     @Autowired
     private LocaleResolver localeResolver;
@@ -35,8 +31,6 @@ public class FoodiAuthenticationSuccessHandler extends SimpleUrlAuthenticationSu
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {
 
-        // changeLastLoginTime(username)
-//        userService.changeLastLoginTime(authentication.getName());
 
         HttpSession session = request.getSession();
         CurrentUser authUser = (CurrentUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -49,11 +43,11 @@ public class FoodiAuthenticationSuccessHandler extends SimpleUrlAuthenticationSu
         }
 
         //set our response to OK status
-//        response.setStatus(HttpServletResponse.SC_OK);
+        response.setStatus(HttpServletResponse.SC_OK);
 
         //since we have created our custom success handler, its up to us to where
         //we will redirect the user after successfully login
-        response.sendRedirect(ViewUtil.Views.HOME.getViewName());
+        response.sendRedirect(ViewUtil.Views.ALLHOSTLIST.getViewName());
     }
 
 }

@@ -13,6 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 
+/**
+ * Hibernate Token Repository
+ */
 @Repository("tokenRepositoryDao")
 @Transactional
 public class HibernateTokenRepositoryImpl extends AbstractDao<String, PersistentLogin>
@@ -20,6 +23,10 @@ public class HibernateTokenRepositoryImpl extends AbstractDao<String, Persistent
 
 	static final Logger logger = LoggerFactory.getLogger(HibernateTokenRepositoryImpl.class);
 
+	/**
+	 *
+	 * @param token
+     */
 	@Override
 	public void createNewToken(PersistentRememberMeToken token) {
 		logger.info("Creating Token for user : {}", token.getUsername());
@@ -32,6 +39,11 @@ public class HibernateTokenRepositoryImpl extends AbstractDao<String, Persistent
 
 	}
 
+	/**
+	 *
+	 * @param seriesId
+	 * @return
+     */
 	@Override
 	public PersistentRememberMeToken getTokenForSeries(String seriesId) {
 		logger.info("Fetch Token if any for seriesId : {}", seriesId);
@@ -48,6 +60,10 @@ public class HibernateTokenRepositoryImpl extends AbstractDao<String, Persistent
 		}
 	}
 
+	/**
+	 *
+	 * @param username
+     */
 	@Override
 	public void removeUserTokens(String username) {
 		logger.info("Removing Token if any for user : {}", username);
@@ -61,6 +77,12 @@ public class HibernateTokenRepositoryImpl extends AbstractDao<String, Persistent
 
 	}
 
+	/**
+	 *
+	 * @param seriesId
+	 * @param tokenValue
+	 * @param lastUsed
+     */
 	@Override
 	public void updateToken(String seriesId, String tokenValue, Date lastUsed) {
 		logger.info("Updating Token for seriesId : {}", seriesId);

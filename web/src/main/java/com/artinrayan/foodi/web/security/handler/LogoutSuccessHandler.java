@@ -10,20 +10,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Created by asus on 7/22/2017.
+ * Logout Success Handler
  */
 @Component
-public class FoodiLogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler {
+public class LogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler {
 
     @Override
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response,
                                 Authentication authentication) throws IOException, ServletException {
-
-        if (authentication != null) {
-            // do something
-        }
-
-//        setDefaultTargetUrl("/login");
         super.onLogoutSuccess(request, response, authentication);
     }
 }

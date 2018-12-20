@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
- * Created by asus on 1/2/2018.
+ * Utility class for JDBC connections, includes the connection properties
  */
 public class DBConnection {
 

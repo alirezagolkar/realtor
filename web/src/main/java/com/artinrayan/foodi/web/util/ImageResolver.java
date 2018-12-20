@@ -11,7 +11,7 @@ public class ImageResolver {
     private static final String imagesUrl = "static/images/";
 
     public static String getImage(String path) {
-        return FoodiApplicationHelper.getServletContext().getContextPath() + "/" + imagesUrl + path;
+        return ApplicationHelper.getServletContext().getContextPath() + "/" + imagesUrl + path;
     }
 
 

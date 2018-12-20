@@ -2,7 +2,6 @@ package com.artinrayan.foodi.core;
 
 import com.artinrayan.foodi.model.Attachment;
 import exception.BusinessException;
-import exceptions.AttachmentDaoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
- * Created by asus on 7/18/2017.
+ * Attachment Service Implementation
  */
 @Service("attachmentService")
 @Transactional
@@ -19,31 +18,46 @@ public class AttachmentServiceImpl implements AttachmentService {
     @Autowired
     AttachmentDao attachmentDao;
 
+    /**
+     * Saves an attachment
+     *
+     * @param attachment
+     */
     @Override
-    public void saveAttachment(Attachment attachmentId) throws BusinessException {
-        attachmentDao.save(attachmentId);
+    public void saveAttachment(Attachment attachment){
+        attachmentDao.save(attachment);
     }
 
-    public List<Attachment> findAttachmentsByHostId(int attachmentId) throws BusinessException
-    {
-        return attachmentDao.findAttachmentsByHostId(attachmentId);
+    /**
+     * Loads attachments by a given host Id
+     *
+     * @param hostId
+     * @return
+     */
+    public List<Attachment> findAttachmentsByHostId(int hostId){
+        return attachmentDao.findAttachmentsByHostId(hostId);
     }
 
+    /**
+     * Loads attachments by a given attachment Id
+     *
+     * @param attachmentId
+     * @return
+     */
     @Override
-    public Attachment findAttachmentById(int attachmentId) throws BusinessException {
+    public Attachment findAttachmentById(int attachmentId){
         return attachmentDao.findAttachmentById(attachmentId);
     }
 
+    /**
+     * Deletes an attachment
+     *
+     * @param attachmentId
+     */
     @Override
-    public void deleteAttachmentById(int attachmentId) throws BusinessException {
-        try {
-            attachmentDao.delete(attachmentId);
-        }
-        catch (AttachmentDaoException e)
-        {
-            throw new BusinessException(e.getMessage(), e.getCause());
-        }
-    }
+    public void deleteAttachmentById(int attachmentId){
+        attachmentDao.delete(attachmentId);
 
+    }
 
 }

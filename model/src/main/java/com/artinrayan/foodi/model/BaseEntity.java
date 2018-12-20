@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 /**
- * Created by asus on 2/17/2018.
+ * The ase entity
  */
 @Entity
 @Table(name = "Base")

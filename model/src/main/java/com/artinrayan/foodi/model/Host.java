@@ -16,7 +16,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by asus on 5/25/2017.
+ * Entity class to host information for a host object
  */
 @Entity
 @Table(name = "Host", uniqueConstraints =
@@ -99,25 +99,10 @@ public class Host implements Serializable{
     @Column(name = "Longitude", nullable=false)
     private String longitude;
 
-    /*
-    * Delete rules:
-    * 1) orphanRemoval = true: If orphanRemoval=true is specified the disconnected instance is automatically removed.
-    * This is useful for cleaning up dependent objects that should not exist without a reference from an owner object
-    * example: host.getHostFiles().clear();
-    * 2) cascade=CascadeType.REMOVE : If only cascade=CascadeType.REMOVE is specified no automatic action is taken since
-    * disconnecting a relationship is not a remove operation
-    * 3) If you want to remove parent without deleting child use cascade = {CascadeType.MERGE, CascadeType.PERSIST}. Make sure
-    * foreign key constraint is nullable in database design
-    * */
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "host", cascade = CascadeType.ALL)
     @Fetch(FetchMode.SELECT)
     @JsonIgnore
     private Set<Attachment> attachments;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "host", orphanRemoval = true)
-//    @Fetch(FetchMode.JOIN)
-    @JsonIgnore
-    private Set<Category> categories = new HashSet<Category>();
 
 
     public Integer getHostId() {

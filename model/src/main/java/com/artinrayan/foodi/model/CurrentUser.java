@@ -9,7 +9,8 @@ import java.io.Serializable;
 import java.util.*;
 
 /**
- * Created by asus on 7/24/2017.
+ * The model represents current user object. All essential information for a logged in user
+ * stores in this object which is accessible globally while session in valid
  */
 public class CurrentUser implements UserDetails, CredentialsContainer {
     private static final long serialVersionUID = 400L;
@@ -23,13 +24,31 @@ public class CurrentUser implements UserDetails, CredentialsContainer {
     private final int userId;
     private final String fullName;
 
+    /**
+     * @param username
+     * @param password
+     * @param authorities
+     * @param userId
+     * @param fullName
+     */
     public CurrentUser(String username, String password, Collection<? extends GrantedAuthority> authorities, int userId, String fullName) {
         this(username, password, true, true, true, true, authorities, userId, fullName);
     }
 
+    /**
+     * @param username
+     * @param password
+     * @param enabled
+     * @param accountNonExpired
+     * @param credentialsNonExpired
+     * @param accountNonLocked
+     * @param authorities
+     * @param userId
+     * @param fullName
+     */
     public CurrentUser(String username, String password, boolean enabled, boolean accountNonExpired,
                        boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority>
-                              authorities, int userId, String fullName) {
+                               authorities, int userId, String fullName) {
         if (username != null && !"".equals(username) && password != null) {
             this.username = username;
             this.password = password;
@@ -85,6 +104,10 @@ public class CurrentUser implements UserDetails, CredentialsContainer {
         return fullName;
     }
 
+    /**
+     * @param authorities
+     * @return
+     */
     private static SortedSet<GrantedAuthority> sortAuthorities(Collection<? extends GrantedAuthority> authorities) {
         Assert.notNull(authorities, "Cannot pass a null GrantedAuthority collection");
         TreeSet sortedAuthorities = new TreeSet(new CurrentUser.AuthorityComparator());
